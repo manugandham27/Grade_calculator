@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Centered Heading</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: yellowgreen;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;  /* Center vertically */
+      align-items: center;      /* Center horizontally */
+      font-family: Arial, sans-serif;
+      border: 30px solid blue;
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: bold;
+      color: black;
+      margin-bottom: 20px;
+    }
+
+    .gpa, .cgpa {
+      width: 200px;
+      height: 40px;
+      font-size: 18px;
+      font-weight: bold;
+      font-family: Arial, Helvetica, sans-serif;
+      color: wheat;
+      border-radius: 4px;
+      border: 3px solid black;
+      padding: 5px;
+      margin: 10px;
+    }
+
+    .gpa {
+      background-color: blueviolet;
+    }
+
+    .cgpa {
+      background-color: saddlebrown;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>GRADE CALCULATOR AND CHECKER</h1>
+  <button onclick="opencalc()" class="gpa">GPA CALCULATOR</button>
+  <button onclick="opencgpcalc()" class="cgpa">CGPA CALCULATOR</button>
+
+  <script>
+    function opencalc() {
+      window.location.href = "gpa.html";
+    }
+    function opencgpcalc(){
+      window.location.href ="cgpa.html";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA calculator </title>
+     <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      font-size: 24px;
+      background-color:yellowgreen;
+      border: 30px solid blue;
+
+    }
+    .row {
+      margin-bottom: 10px;
+    }
+    input {
+      padding: 6px;
+      margin-right: 10px;
+    }
+    #container {
+      margin-top: 20px;
+      margin-left: 20%;
+    }
+    #result {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+    <h1 style="text-align:  center;">GPA  calculator</h1>
+    <label style="margin-left: 20%;"for="subjects">Enter the number of subjects</label>
+    <input style="margin-top: 30px;" type="number" id="subjects" name ="subjects" placeholder="Enter the number of subjects ">
+    <br> 
+    <button style="margin-left: 35%; margin-top: 30px; height :35px; background-color: saddlebrown; border: 2px solid black;color: wheat; font-size: 20px;" onclick="generateFields()">click to enter your grades and credits</button>
+
+  <div id="container"></div>
+
+  <button onclick="calculateGPA()" style="margin-left: 35%; height :35px; background-color: blueviolet; border: 2px solid black;color: white; font-weight :bold; font-size: 20px;">Calculate GPA</button>
+  <div id="result"></div>
+
+  <script>
+
+     function generateFields() {
+      const count = parseInt(document.getElementById("subjects").value);
+      const container = document.getElementById("container");
+      container.innerHTML = ""; // Clear old fields
+
+        if (isNaN(count) || count <= 0) {
+    alert("Please enter a valid number of subjects before proceeding.");
+    return;
+  }
+      for (let i = 0; i < count; i++) {
+        const row = document.createElement("div");
+        row.className = "row";
+
+        const creditInput = document.createElement("input");
+        creditInput.type = "number";
+        creditInput.placeholder = `Subject ${i + 1} Credit`;
+        creditInput.className = "credit";
+
+        const gradeInput = document.createElement("input");
+        gradeInput.type = "text";
+        gradeInput.placeholder = `Subject ${i + 1} Grade (S/A/B/...)`;
+        gradeInput.className = "grade";
+
+        row.appendChild(creditInput);
+        row.appendChild(gradeInput);
+        container.appendChild(row);
+      }
+    }
+
+    function gradeToPoint(grade) {
+      const map = {
+        'S': 10, 'A': 9, 'B': 8, 'C': 7, 'D': 6, 'E': 5, 'F': 0
+      };
+      return map[grade.toUpperCase()] ?? -1;
+    }
+
+    function calculateGPA() {
+      const credits = document.querySelectorAll(".credit");
+      const grades = document.querySelectorAll(".grade");
+      let totalCredits = 0, totalWeighted = 0;
+
+      for (let i = 0; i < credits.length; i++) {
+        const credit = parseFloat(credits[i].value);
+        const gradePoint = gradeToPoint(grades[i].value.trim());
+
+        if (isNaN(credit) || credit <= 0) {
+          alert(`Invalid credit for subject ${i + 1}`);
+          return;
+        }
+        if (gradePoint === -1) {
+          alert(`Invalid grade for subject ${i + 1}`);
+          return;
+        }
+
+        totalCredits += credit;
+        totalWeighted += credit * gradePoint;
+      }
+
+      const cgpa = (totalWeighted / totalCredits).toFixed(2);
+      document.getElementById("result").textContent = `Your GPA is: ${cgpa}`;
+    }
+  </script>
+</body>
+</html>

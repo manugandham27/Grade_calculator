@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CGPA calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      font-size: 24px;
+      background-color: yellowgreen;
+      border: 30px solid blue;
+    }
+    h1 {
+      text-align: center;
+      color: brown;
+    }
+    .totalsems {
+      margin-top: 20px;
+      margin-left: 35%;
+      width: 320px;
+      height: 45px;
+      background-color: aqua;
+      font-size: 18px;
+      border :3px solid red;
+      font-weight: bold;
+      
+    }
+    .totalcgpa{
+      margin-top: 20px;
+      margin-left: 35%;
+      width: 320px;
+      height: 45px;
+      background-color: blueviolet;
+      border: 3px solid black;
+      font-size: 18px;
+      color: wheat;
+      font-weight: bold;
+
+    }
+    #result {
+      font-size: 22px;
+      font-weight: bold;
+      margin-left:35%;
+      margin-top: 20px;
+    }
+    input.sem {
+      margin: 10px;
+      padding: 6px;
+      font-size: 18px;
+      margin-left: 35%;
+    }
+  </style>
+</head>
+<body>
+  <h1>CGPA CALCULATOR</h1>
+
+  <label style="margin-left: 35%;" for="sems">Number of Semesters</label>
+  <input type="number" id="sems" name="sems" placeholder="Enter the number of Semesters">
+  <br>
+
+  <button class="totalsems" onclick="dynaminputprocess()">Click to Enter Each Semester GPA</button>
+  <div id="container"></div>
+
+  <button class="totalcgpa" onclick="calculateCGPA()">Calculate CGPA</button>
+  <div id="result"></div>
+
+  <script>
+    function dynaminputprocess() {
+      const count = parseInt(document.getElementById("sems").value);
+      const container = document.getElementById("container");
+      container.innerHTML = "";
+
+      if (isNaN(count) || count <= 0) {
+        alert("Please enter a valid number of semesters");
+        return;
+      }
+
+      for (let i = 0; i < count; i++) {
+        const row = document.createElement("div");
+        row.className = "row";
+
+        const semInput = document.createElement("input");
+        semInput.type = "number";
+        semInput.step = "0.01";
+        semInput.placeholder = `Sem ${i + 1} GPA`;
+        semInput.className = "sem";
+
+        row.appendChild(semInput);
+        container.appendChild(row);
+      }
+    }
+
+    function calculateCGPA() {
+      const gpaInputs = document.querySelectorAll(".sem");
+      const totalSems = parseInt(document.getElementById("sems").value);
+
+      if (gpaInputs.length === 0 || isNaN(totalSems) || totalSems <= 0) {
+        alert("Please enter semester GPAs first.");
+        return;
+      }
+
+      let totalGPA = 0;
+      for (let i = 0; i < gpaInputs.length; i++) {
+        const gpa = parseFloat(gpaInputs[i].value);
+        if (isNaN(gpa) || gpa < 0 || gpa > 10) {
+          alert(`Please enter a valid GPA for semester ${i + 1} (0 - 10).`);
+          return;
+        }
+        totalGPA += gpa;
+      }
+
+      const cgpa = (totalGPA / totalSems).toFixed(2);
+      document.getElementById("result").textContent = `Your CGPA is: ${cgpa}`;
+    }
+  </script>
+
+</body>
+</html>
